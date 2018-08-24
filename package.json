@@ -27,7 +27,6 @@
     "express": "^4.16.3",
     "morgan": "^1.9.0",
     "mysql": "^2.16.0",
-    "node-mariadb": "^0.1.1",
     "nodemon": "^1.18.3"
   }
 }
