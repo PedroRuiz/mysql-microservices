@@ -25,12 +25,21 @@ const clientsController = require('../controllers/clients.controller');
 
 router.get('/', clientsController.getclients);
 router.get('/:id', clientsController.getClient);
+router.get('/addresses/:idclient', clientsController.getClientAddresses);
+router.get('/address/:id', clientsController.getAddress);
+router.get('/phones/:id', clientsController.getPhones);
 
 router.post('/', clientsController.createClient);
+router.post('/addresses/:idclient', clientsController.addAddress);
+router.post('/phones/:idclient', clientsController.addPhones);
 
 router.put('/:id', clientsController.putClient);
+router.put('/addresses/:id', clientsController.putAddress);
+router.put('/phones/:id', clientsController.putPhones);
 
 router.delete('/:id', clientsController.deleteClient);
+router.delete('/addresses/:id', clientsController.deleteAddress);
+router.delete('/phones/:id', clientsController.deletePhones);
 
 module.exports = router; 
 

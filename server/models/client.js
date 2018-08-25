@@ -34,8 +34,23 @@ const client = ({
 
 const clientModel = ( client );
 
+const addresses = {
+    id: Number,
+    id_custom: Number,
+    date_creation: Date,
+    address1: String,
+    address2: String,
+    city: String,
+    province: String,
+    zip: String
+}
 
-module.exports = clientModel;
+const clientAddress = ( addresses );
+
+module.exports = {
+    clientModel: clientModel,
+    clientAddress: clientAddress
+};
 
 /** this ends this file
 * server/models/client
