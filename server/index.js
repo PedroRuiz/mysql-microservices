@@ -48,7 +48,7 @@ app.use(cors({
  * R O U T E S
  */
 app.use(`${URL_version}/clients`, require('./routes/clients.routes'));
-
+app.use(`${URL_version}/products`, require('./routes/products.routes'));
 
 /**
  * S T A R T I N G   S E R V E R
