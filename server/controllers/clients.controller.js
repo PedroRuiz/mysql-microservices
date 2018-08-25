@@ -86,7 +86,7 @@ clientsController.createClient = async (req, res) => {
     ];
 
     connection.execute(
-        `SELECT INTO  custom_customers 
+        `INSERT INTO custom_customers 
             (first_name,last_name,tax_id_number,mobile,work_phone,home_phone,fax,pager,image) 
             VALUES (?,?,?,?,?,?,?,?,?)`, 
         arrData,
