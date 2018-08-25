@@ -345,6 +345,87 @@ clientsController.deletePhones = async (req, res) => {
     );
 };
 
+clientsController.getBankAccounts = async (req, res) => {
+    id = req.params.idclient;
+
+    //console.log(`SELECT * FROM custom_bank_accounts WHERE id = ${id}`); process.exit(1);
+
+    connection.execute(
+        `SELECT * FROM custom_bank_accounts WHERE id_custom = ${id}`,
+        (err, result) => {
+            if (! err) {
+                res.json(result);
+            } else {
+                res.json(err);
+            }
+        }
+    )
+};
+
+clientsController.addBankAccount = async (req, res) => {
+    id = req.params.idclient;
+
+    query = `INSERT INTO custom_bank_accounts (id_custom, account, address, city, province, zip)
+        VALUES (${id},?,?,?,?,?);`;
+
+    connection.execute(
+        query, [
+            req.body.account,
+            req.body.address,
+            req.body.city,
+            req.body.province,
+            req.body.zip
+        ], (err) => {
+            if (!err) {
+                res.json(Ok);
+            } else {
+                res.json(err);
+            }
+        }
+    );
+
+};
+
+clientsController.putBankAccounts = async (req, res) => {
+    id = req.params.id;
+
+    query = `UPDATE custom_bank_accounts SET account = ?, address = ?, city = ?, province = ?, zip = ?
+        WHERE id = ${id}`;
+
+    connection.execute(
+        query, [
+            req.body.account,
+            req.body.address,
+            req.body.city,
+            req.body.province,
+            req.body.zip
+        ], (err) => {
+            if (!err) {
+                res.json(Ok);
+            } else {
+                res.json(err);
+            }
+        }
+    );
+};
+
+clientsController.deleteBankAccounts = async (req, res) => {
+    id = req.params.id;
+
+    connection.query(
+        `DELETE FROM custom_bank_accounts WHERE id=${id}`,
+        (err) => {
+            if (! err ) {
+                res.json(Ok);
+            } 
+            else {
+                res.json(err);
+            }
+        }
+    )
+}
+
+
 
 module.exports = clientsController;
 /** this ends this file
