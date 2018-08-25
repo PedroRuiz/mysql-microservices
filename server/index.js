@@ -24,8 +24,9 @@ const app = express();
 const cors = require('cors');
 
 const { connection } = require('./database');
+const { connData } = require('../connData');
 
-const URL_version = '/izanagi/v1';
+const URL_version = '/api/v1';
 
 
 /**
@@ -46,7 +47,7 @@ app.use(cors({
 /**
  * R O U T E S
  */
-
+app.use(`${URL_version}/clients`, require('./routes/clients.routes'));
 
 
 /**
@@ -58,6 +59,9 @@ app.listen(app.get('port'), (error) => {
     }
     else {
         console.log('\nServer on port', app.get('port'));
+        if (connection) {
+            console.log('Mysql connected to host',connData.HOST);
+        }
     }
 });
 

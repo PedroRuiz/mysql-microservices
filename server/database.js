@@ -20,13 +20,13 @@
 
 const mysql = require('mysql2');
 
-const { DATABASE, HOST, PASSWORD, USER } = require( '../connData.js' );
+const { connData } = require( '../connData.js' );
 
 const connection = mysql.createConnection({
-    host: HOST,
-    user: USER,
-    password: PASSWORD,
-    database: DATABASE
+    host: connData.HOST,
+    user: connData.USER,
+    password: connData.PASSWORD,
+    database: connData.DATABASE
 });
 
 module.exports = {
