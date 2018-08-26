@@ -25,12 +25,17 @@ const controller = require('../controllers/suppliers.controller');
 
 router.get("/s/", controller.getSuppliers);
 router.get("/s/:id", controller.getSupplier);
+router.get('/p/:id', controller.getSupplierPhones);
+router.get("/p/id/:id", controller.getSupplierPhoneById);
 
 router.post('/s', controller.createSupplier);
+router.post("/p/:id", controller.createSupplierPhones);
 
 router.delete('/s/:id', controller.deleteSupplier);
+router.delete("/p/:id", controller.deleteSupplierPhone);
 
 router.put('/s/:id', controller.putSupplier);
+router.put('/p/:id', controller.putSupplierPhone);
 
 
 module.exports = router;
