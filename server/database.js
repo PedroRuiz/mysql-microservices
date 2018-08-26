@@ -19,6 +19,7 @@
 */
 
 const mysql = require('mysql2');
+const Promises = require('mysql2/promise');
 
 const { connData } = require( '../connData.js' );
 
@@ -29,8 +30,16 @@ const connection = mysql.createConnection({
     database: connData.DATABASE
 });
 
+const connPromise = Promises.createConnection({
+    host: connData.HOST,
+    user: connData.USER,
+    password: connData.PASSWORD,
+    database: connData.DATABASE
+});
+
 module.exports = {
-    connection: connection
+    connection: connection,
+    connPromise: connPromise
 }
 
 /** this ends this file

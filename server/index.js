@@ -49,6 +49,7 @@ app.use(cors({
  */
 app.use(`${URL_version}/clients`, require('./routes/clients.routes'));
 app.use(`${URL_version}/products`, require('./routes/products.routes'));
+app.use(`${URL_version}/suppliers`, require('./routes/suppliers.routes'));
 
 /**
  * S T A R T I N G   S E R V E R
