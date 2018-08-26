@@ -26,6 +26,8 @@ const Ok = {
 
 const TABLE = "suppliers_suppliers";
 const PHONES = 'suppliers_phones';
+const BANK = 'suppliers_bank_accounts';
+const ADDRESS = "suppliers_addresses";
 
 const suppliersController = {};
 
@@ -89,6 +91,10 @@ suppliersController.putSupplier = async (req, res) => {
 
 };
 
+/**
+ * P H O N E S
+ */
+
 suppliersController.getSupplierPhones = async (req, res) => {
     await connPromise
         .then(
@@ -151,6 +157,119 @@ suppliersController.getSupplierPhoneById = async (req, res) => {
             res.json (!err ? rows[0] : err)
         )
         .catch( e => res.json(e))
+};
+
+/**
+ * B A N K S
+ */
+
+ suppliersController.getSupplierBanks = async (req, res) => {
+     
+    await connPromise
+        .then(
+            conn => conn.query(`SELECT * FROM ${BANK} WHERE id_supplier = ${req.params.id}`)
+        )
+        .then(([rows, fields, err]) =>
+            res.json(!err ? rows[0] : err)
+        )
+        .catch(e => res.json(e))
+ };
+
+suppliersController.createSupplierBank = async (req, res) => {
+    await connPromise
+     .then((conn) =>
+            conn.execute(`INSERT INTO ${BANK} (id_supplier, account, address, city, province, zip, memo) VALUES (?,?,?,?,?,?,?) `,
+                [
+                    req.params.id,
+                    req.body.account,
+                    req.body.address,
+                    req.body.city,
+                    req.body.province,
+                    req.body.zip,
+                    req.body.memo
+                ]
+            )
+        )
+        .then(([rows, fields, err]) => res.json(!err ? Ok : err))
+        .catch(e => res.json(e))
+};
+
+suppliersController.putSupplierBank = async (req, res) => {
+    await connPromise
+      .then(conn =>
+        conn.execute(
+          `UPDATE ${BANK} SET account = ?, address = ?, city = ?, province = ?, zip = ?, memo = ?
+            WHERE id=${req.params.id}`,
+                [
+                    req.body.account,
+                    req.body.address,
+                    req.body.city,
+                    req.body.province,
+                    req.body.zip,
+                    req.body.memo
+                ]
+        )
+      )
+      .then(([rows, fields, err]) => res.json(!err ? Ok : err))
+      .catch(e => res.json(e));
+};
+
+suppliersController.deleteSupplierBank = async (req, res) => {
+    await connPromise
+        .then((conn) =>
+            conn.query(`DELETE FROM ${BANK} WHERE id = ${req.params.id}`)
+        )
+        .then(([rows, fields, err]) => res.json(!err ? Ok : err))
+        .catch(e => res.json(e))
+};
+
+/**
+ * A D D R E S S E S
+ */
+
+suppliersController.getSupplierAddresses = async (req, res) => {
+    await connPromise
+      .then(conn =>
+        conn.query(
+          `SELECT * FROM ${ADDRESS} WHERE id_supplier = ${req.params.id}`
+        )
+      )
+      .then(([rows, fields, err]) => res.json(!err ? rows : err))
+      .catch(e => res.json(e));
+};
+
+suppliersController.createSupplierAddress = async (req, res) => {
+    await connPromise
+      .then(
+          (conn) =>
+            conn.query(
+                  `INSERT INTO ${ADDRESS} (id_supplier, invoice_address, address_1, address_2, city, province, zip, memo) 
+            VALUES ('${req.params.id}','${req.body.invoice_address}','${req.body.address_1}','${req.body.address_2}','${req.body.city}','${req.body.province}','${req.body.zip}','${req.body.memo}')`,
+        )
+      )
+      .then(([rows, fields, err]) => res.json( !err ? Ok : err))
+      .catch(e => res.json(e));
+};
+
+suppliersController.putSupplierAddress = async (req, res) => {
+    await connPromise
+        .then(
+            (conn) => conn.query(
+                `UPDATE ${ADDRESS} SET invoice_address='${req.body.invoice_address}', address_1 = '${req.body.address_1}', address_2 = '${req.body.address_2}',
+                city = '${req.body.city}', province='${req.body.province}', zip='${req.body.zip}', memo='${req.body.memo}' WHERE id=${req.params.id}`
+            )
+        )
+        .then(([rows, fields, err]) => res.json(!err ? Ok : err))
+        .catch(e => res.json(e));
+};
+
+suppliersController.deleteSupplierAddress = async (req, res) => {
+    await connPromise
+      .then(conn =>
+        conn.query(`DELETE FROM ${ADDRESS} WHERE id = ${req.params.id}`)
+      )
+      .then(([rows, fields, err]) => res.json(!err ? Ok : err))
+      .catch(e => res.json(e));
 };
 
 module.exports = suppliersController;
