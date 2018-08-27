@@ -195,10 +195,10 @@ Lets say we need to connect by get http verb to get customs list:
 | get address by id        | get       | http://localhost:3000/api/v1/clients/address/id   | idaddress |
 | get client all phones    | get       | http://localhost:3000/api/v1/clients/phones/id    | idclient  |
 | get banks of client      | get       | http://localhost:3000/api/v1/clients/banks/id     | idclient  |
-| send client              | post      | http://localhost:3000/api/v1/clients/             |           |
-| send client's address    | post      | http://localhost:3000/api/v1/clients/addresses/id | idclient  |
-| send client's phone      | post      | http://localhost:3000/api/v1/clients/phones/id    | idclient  |
-| send client's bank       | post      | http://localhost:3000/api/v1/clients/banks/id     | idclient  |
+| create client            | post      | http://localhost:3000/api/v1/clients/             |           |
+| create client's address  | post      | http://localhost:3000/api/v1/clients/addresses/id | idclient  |
+| create client's phone    | post      | http://localhost:3000/api/v1/clients/phones/id    | idclient  |
+| create client's bank     | post      | http://localhost:3000/api/v1/clients/banks/id     | idclient  |
 | update client            | put       | http://localhost:3000/api/v1/clients/id           | idclient  |
 | update client's address  | put       | http://localhost:3000/api/v1/clients/addresses/id | idaddress |
 | update client's bank     | put       | http://localhost:3000/api/v1/clients/banks/id     | idbank    |
@@ -271,13 +271,47 @@ As you saw in the section of tables creation, the behaviour of deletion client c
 ```
 {
   "address_1": "string",
-
   "address_2": "string",
-
   "city": "string",
-
   "province": "string",
-
   "zip": "string"
+}
+```
+### client phone creation ###
+```
+{
+  "phone_type": "string", // valid types: 'landline','mobile','fax','branch' and 'other'
+  "prefix":"string",
+  "phone": "string",
+  "suffix": "string", // used for extensions and other...
+  "memo": "string"
+}
+```
+### client bank creation ###
+```
+{
+  "account":  "string", // to validate in client if needed, unique
+  "address":  "string",
+  "city":  "string",
+  "province":  "string",
+  "zip":  "string"
+}
+```
+### product creation ###
+```
+{
+  "code": "string", // unique
+  "description": "string",
+  "size": "string",
+  "size_units":"string",
+  "color": "string",
+  "weight": decimal, // node mysql2 api will return as string
+  "weight_units": "string",
+  "price": "string",
+  "stock": "string",
+  "broken_stock": "string",
+  "on_sale": "string",
+  "to_serve": "string",
+  "to_receive": "string"
 }
 ```
