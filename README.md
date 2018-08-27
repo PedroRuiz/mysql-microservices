@@ -257,23 +257,14 @@ As you saw in the section of tables creation, the behaviour of deletion client c
 ```
 {
   "first_name": "string",
-
   "last_name": "string",
-
   "tax_id_number": "string", // to validate on client if needed, index unique
-
   "mobile": "string",
-
   "work_phone": "string",
-
   "home_phone": "string",
-
   "fax": "string",
-
   "pager": "string",
-
   "image": "string"
-
 }
 ```
 ### client address creation ###
