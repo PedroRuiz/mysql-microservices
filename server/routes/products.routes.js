@@ -26,7 +26,7 @@ const controller = require('../controllers/products.controller');
 router.get('/p/', controller.getProducts);
 router.get('/p/:id', controller.getProduct);
 router.get('/p/code/:code', controller.getProductByCode);
-router.get('/i/', controller.getImages);
+router.get('/i/:id', controller.getImages);
 router.get("/i/:idImage", controller.getImage);
 
 router.post('/p/', controller.createProduct);

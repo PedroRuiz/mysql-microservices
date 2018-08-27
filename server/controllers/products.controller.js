@@ -166,7 +166,7 @@ productsController.addToReceive = (req, res) => {
 productsController.getImages = (req, res) => {
     
     connection.query(
-        `SELECT * FROM ${IMAGES}`,
+        `SELECT * FROM ${IMAGES} WHERE product_id = ${req.params.id}`,
         (err, result) => {
             res.json( !err ? result : err);
         }
