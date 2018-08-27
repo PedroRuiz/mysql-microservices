@@ -232,7 +232,7 @@ As you saw in the section of tables creation, the behaviour of deletion client c
 |:-----------------------------|:----------|:------------------------------------------------------------|:-----------|
 | get all suppliers            | get       | http://localhost:3000/api/v1/suppliers/s/                   |            |
 | get supplier by id           | get       | http://localhost:3000/api/v1/suppliers/s/id                 | idsupplier |
-| get supplier phones          | get       | http://localhost:3000/api/v1/suppliers/p/id                 | idsupplier |
+| get supplier all phones      | get       | http://localhost:3000/api/v1/suppliers/p/id                 | idsupplier |
 | get supplier phones          | get       | http://localhost:3000/api/v1/suppliers/p/id/id              | idphone    |
 | get supplier banks           | get       | http://localhost:3000/api/v1/suppliers/b/id                 | idsupplier |
 | get supplier addresses       | get       | http://localhost:3000/api/v1/suppliers/a/id                 | idsupplier |
@@ -253,7 +253,7 @@ As you saw in the section of tables creation, the behaviour of deletion client c
 
 ## expected formats ##
 
-### client creation ###
+### client ###
 ```
 {
   "first_name": "string",
@@ -267,7 +267,7 @@ As you saw in the section of tables creation, the behaviour of deletion client c
   "image": "string"
 }
 ```
-### client address creation ###
+### client address ###
 ```
 {
   "address_1": "string",
@@ -277,7 +277,7 @@ As you saw in the section of tables creation, the behaviour of deletion client c
   "zip": "string"
 }
 ```
-### client phone creation ###
+### client phone ###
 ```
 {
   "phone_type": "string", // valid types: 'landline','mobile','fax','branch' and 'other'
@@ -287,7 +287,7 @@ As you saw in the section of tables creation, the behaviour of deletion client c
   "memo": "string"
 }
 ```
-### client bank creation ###
+### client bank ###
 ```
 {
   "account":  "string", // to validate in client if needed, unique
@@ -297,7 +297,7 @@ As you saw in the section of tables creation, the behaviour of deletion client c
   "zip":  "string"
 }
 ```
-### product creation ###
+### product ###
 ```
 {
   "code": "string", // unique
@@ -313,5 +313,53 @@ As you saw in the section of tables creation, the behaviour of deletion client c
   "on_sale": "string",
   "to_serve": "string",
   "to_receive": "string"
+}
+```
+### product image ###
+```
+{
+  "product_id": integer,
+  "image": "string"
+}
+```
+### supplier ###
+```
+{
+  "tax_id": "string", // to validate in client if needed. Valid types are 'company' and 'personal'
+  "first_name": "string",
+  "last_name": "string"
+}
+```
+### supplier phone ###
+```
+{
+  "default_phone": "0", // default '0', '1' for indicate this is the main phone
+  "prefix": "string",
+  "number": "string",
+  "suffix": "string",
+  "memo": "string"
+}
+```
+### supplier bank account ####
+```
+{
+  "account": "string", // to validate in client if needed.
+  "address": "calle del banco",
+  "city": "string",
+  "province": "string",
+  "zip": "string",
+  "memo": "string"
+}
+```
+### supplier addresses ###
+```
+{
+  "invoice_address": "1", // expected values are '0' and '1' for mark this address as billing address
+  "address_1": "string",
+  "address_2": "string",
+  "city": "string",
+  "province": "string",
+  "zip": "string",
+  "memo": "string"
 }
 ```
