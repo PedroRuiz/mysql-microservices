@@ -187,7 +187,7 @@ Lets say we need to connect by get http verb to get customs list:
 
 ### routes for clients ###
 
-| action route             | method    | url                                               |  id?      |
+| action route             | method    | url                                               |  params   |
 |:-------------------------|:----------|:--------------------------------------------------|:----------|
 | get all clients          | get       | http://localhost:3000/api/v1/clients              |           |
 | get one clients          | get       | http://localhost:3000/api/v1/clients/id           | idclient  |
@@ -208,3 +208,85 @@ Lets say we need to connect by get http verb to get customs list:
 | delete client's bank     | delete    | http://localhost:3000/api/v1/clients/banks/id     | idbank    |
 
 As you saw in the section of tables creation, the behaviour of deletion client causes the deletion in cascade of other asociated data.
+
+### routes for products ###
+| action route                 | method    | url                                                         |  params   |
+|:-----------------------------|:----------|:------------------------------------------------------------|:----------|
+| get all products             | get       | http://localhost:3000/api/v1/products/p/                    |           |
+| get product by id            | get       | http://localhost:3000/api/v1/products/p/id                  | idproduct |
+| get product by code          | get       | http://localhost:3000/api/v1/products/p/code/id             | code      |
+| get product's image          | get       | http://localhost:3000/api/v1/products/p/image/id            | idproduct |
+| get image by id              | get       | http://localhost:3000/api/v1/products/i/image/id            | idimage   |
+| create product               | post      | http://localhost:3000/api/v1/products/p/                    |           |
+| create product image         | post      | http://localhost:3000/api/v1/products/i/id                  | idprduct  |
+| update product               | put       | http://localhost:3000/api/v1/products/p/id                  | idprduct  |
+| add to product stock (1)     | put       | http://localhost:3000/api/v1/products/p/addstock/id         | idprduct  |
+| add to product to_serve (1)  | put       | http://localhost:3000/api/v1/products/p/addtoserve/id       | idprduct  |
+| add to product to_receive (1)| put       | http://localhost:3000/api/v1/products/p/addtoreceive/id     | idprduct  |
+| delete product               | delete    | http://localhost:3000/api/v1/products/p/id                  | idprduct  |
+| delete product's image       | delete    | http://localhost:3000/api/v1/products/i/id                  | idimage   |
+(1) use negative numbers to substract
+
+### routes for suppliers ###
+| action route                 | method    | url                                                         |  params    |
+|:-----------------------------|:----------|:------------------------------------------------------------|:-----------|
+| get all suppliers            | get       | http://localhost:3000/api/v1/suppliers/s/                   |            |
+| get supplier by id           | get       | http://localhost:3000/api/v1/suppliers/s/id                 | idsupplier |
+| get supplier phones          | get       | http://localhost:3000/api/v1/suppliers/p/id                 | idsupplier |
+| get supplier phones          | get       | http://localhost:3000/api/v1/suppliers/p/id/id              | idphone    |
+| get supplier banks           | get       | http://localhost:3000/api/v1/suppliers/b/id                 | idsupplier |
+| get supplier addresses       | get       | http://localhost:3000/api/v1/suppliers/a/id                 | idsupplier |
+| create supplier              | post      | http://localhost:3000/api/v1/suppliers/s/                   |            |
+| create supplier phone        | post      | http://localhost:3000/api/v1/suppliers/p/id                 | idsupplier |
+| create supplier bank         | post      | http://localhost:3000/api/v1/suppliers/b/id                 | idsupplier |
+| create supplier address      | post      | http://localhost:3000/api/v1/suppliers/a/id                 | idsupplier |
+| delete supplier              | delete    | http://localhost:3000/api/v1/suppliers/s/id                 | idsupplier |
+| delete supplier phone        | delete    | http://localhost:3000/api/v1/suppliers/p/id                 | idsupplier |
+| delete supplier bank         | delete    | http://localhost:3000/api/v1/suppliers/b/id                 | idsupplier |
+| delete supplier address      | delete    | http://localhost:3000/api/v1/suppliers/a/id                 | idsupplier |
+| update supplier              | put       | http://localhost:3000/api/v1/suppliers/s/id                 | idsupplier |
+| update supplier phone        | put       | http://localhost:3000/api/v1/suppliers/p/id                 | idsupplier |
+| update supplier bank         | put       | http://localhost:3000/api/v1/suppliers/b/id                 | idsupplier |
+| update supplier address      | put       | http://localhost:3000/api/v1/suppliers/a/id                 | idsupplier |
+
+
+
+## expected formats ##
+
+### client creation ###
+```
+{
+  "first_name": "string",
+
+  "last_name": "string",
+
+  "tax_id_number": "string", // to validate on client if needed, index unique
+
+  "mobile": "string",
+
+  "work_phone": "string",
+
+  "home_phone": "string",
+
+  "fax": "string",
+
+  "pager": "string",
+
+  "image": "string"
+
+}
+```
+### client address creation ###
+```
+{
+  "address_1": "string",
+
+  "address_2": "string",
+
+  "city": "string",
+
+  "province": "string",
+
+  "zip": "string"
+}
+```
