@@ -180,7 +180,7 @@ clientsController.getClientAddresses = async (req,res) => {
         query,[id],
         (err, result) => {
             if (!err) {
-                res.json(result[0]);
+                res.json(result);
             }
             else {
                 res.json(err);
@@ -272,7 +272,7 @@ clientsController.putAddress = async (req, res) => {
 clientsController.getPhones = async (req, res) => {
     id = req.params.id;
     
-    query = `SELECT * FROM custom_phones WHERE id=${id}`;
+    query = `SELECT * FROM custom_phones WHERE id_custom=${id}`;
 
     connection.query(
         query, (err, result) => {
