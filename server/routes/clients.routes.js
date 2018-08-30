@@ -28,6 +28,7 @@ router.get('/:id', clientsController.getClient);
 router.get('/addresses/:idclient', clientsController.getClientAddresses);
 router.get('/address/:id', clientsController.getAddress);
 router.get('/phones/:id', clientsController.getPhones);
+router.get("/phones/id/:id", clientsController.getPhonesById);
 router.get('/banks/:idclient', clientsController.getBankAccounts);
 
 router.post('/', clientsController.createClient);

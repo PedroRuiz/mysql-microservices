@@ -423,9 +423,18 @@ clientsController.deleteBankAccounts = async (req, res) => {
             }
         }
     )
-}
+};
 
+clientsController.getPhonesById = async (req, res) => {
+    id = req.params.id;
 
+    connection.query(
+        `SELECT * FROM custom_phones WHERE id=${id}`,
+        (err, result) => {
+            res.json( !err ? result : err );
+        }
+    );
+};
 
 module.exports = clientsController;
 /** this ends this file
