@@ -431,7 +431,7 @@ clientsController.getPhonesById = async (req, res) => {
     connection.query(
         `SELECT * FROM custom_phones WHERE id=${id}`,
         (err, result) => {
-            res.json( !err ? result : err );
+            res.json( !err ? result[0] : err );
         }
     );
 };
