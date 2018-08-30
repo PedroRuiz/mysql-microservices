@@ -195,6 +195,7 @@ Lets say we need to connect by get http verb to get customs list:
 | get address by id        | get       | http://localhost:3000/api/v1/clients/address/id   | idaddress |
 | get client all phones    | get       | http://localhost:3000/api/v1/clients/phones/id    | idclient  |
 | get banks of client      | get       | http://localhost:3000/api/v1/clients/banks/id     | idclient  |
+| get phone by id          | get       | http://localhost:3000/api/v1/clients/pones/id/id  | idphone   |
 | create client            | post      | http://localhost:3000/api/v1/clients/             |           |
 | create client's address  | post      | http://localhost:3000/api/v1/clients/addresses/id | idclient  |
 | create client's phone    | post      | http://localhost:3000/api/v1/clients/phones/id    | idclient  |
