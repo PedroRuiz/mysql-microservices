@@ -201,7 +201,7 @@ Lets say we need to connect by get http verb to get customs list:
 | create client's phone    | post      | http://localhost:3000/api/v1/clients/phones/id    | idclient  |
 | create client's bank     | post      | http://localhost:3000/api/v1/clients/banks/id     | idclient  |
 | update client            | put       | http://localhost:3000/api/v1/clients/id           | idclient  |
-| update phone             | put       | http://localhost:3000/api/v1/clients/p/id         | idphone   |
+| update phone             | put       | http://localhost:3000/api/v1/clients/phones/id    | idphone   |
 | update client's address  | put       | http://localhost:3000/api/v1/clients/addresses/id | idaddress |
 | update client's bank     | put       | http://localhost:3000/api/v1/clients/banks/id     | idbank    |
 | delete client            | delete    | http://localhost:3000/api/v1/clients/id           | idclient  |
