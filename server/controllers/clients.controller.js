@@ -58,11 +58,11 @@ clientsController.getClient = (req, res) => {
     connection.query(
         `SELECT * FROM custom_customers WHERE id = ${id}`,
         (err, result) => {
-            if (!err) 
+            if (!err)
             {
                 res.json(result[0]);
             }
-            else 
+            else
             {
                 res.json(err);
             }
@@ -72,7 +72,7 @@ clientsController.getClient = (req, res) => {
 
 clientsController.createClient = async (req, res) => {
     data = req.body;
-    
+
     arrData = [
         data.first_name,
         data.last_name,
@@ -86,16 +86,16 @@ clientsController.createClient = async (req, res) => {
     ];
 
     connection.execute(
-        `INSERT INTO custom_customers 
-            (first_name,last_name,tax_id_number,mobile,work_phone,home_phone,fax,pager,image) 
-            VALUES (?,?,?,?,?,?,?,?,?)`, 
+        `INSERT INTO custom_customers
+            (first_name,last_name,tax_id_number,mobile,work_phone,home_phone,fax,pager,image)
+            VALUES (?,?,?,?,?,?,?,?,?)`,
         arrData,
         (err, result, fields) => {
             if (!err){
                 res.json(Ok);
                 console.log(fields);
-            } 
-            else 
+            }
+            else
             {
                 res.json(err);
             }
@@ -109,23 +109,23 @@ clientsController.putClient = async (req,res) => {
     data = req.body;
 
     arrData = [
-        data.first_name, 
-        data.last_name, 
-        data.tax_id_number, 
-        data.mobile, 
-        data.work_phone, 
-        data.home_phone, 
-        data.fax, 
-        data.pager, 
+        data.first_name,
+        data.last_name,
+        data.tax_id_number,
+        data.mobile,
+        data.work_phone,
+        data.home_phone,
+        data.fax,
+        data.pager,
         data.image
     ];
 
-    query = `UPDATE custom_customers 
+    query = `UPDATE custom_customers
             SET first_name = ?, last_name = ?, tax_id_number= ?,
             mobile = ?, work_phone = ?, home_phone = ?,
-            fax = ?, pager = ?, image = ? 
+            fax = ?, pager = ?, image = ?
             WHERE id = ${id}`;
-    
+
     connection.execute(
         query, arrData,
         (err) => {
@@ -136,7 +136,7 @@ clientsController.putClient = async (req,res) => {
                 res.json(err);
             }
         }
-    
+
     )
 }
 
@@ -161,32 +161,13 @@ clientsController.deleteClient = async (req,res) => {
 clientsController.getClientAddresses = async (req,res) => {
     id = req.params.idclient;
 
-    query = `SELECT 
-                a.id, 
-                a.date_creation, 
-                a.address_1, 
-                a.address_2, 
-                a.city, 
-                a.province, 
-                a.zip 
-            FROM 
-                custom_customers c, 
-                custom_addresses a 
-            WHERE 
-                c.id = 
-                a.id_custom 
-            AND c.id=?`;
-    connection.execute(
-        query,[id],
+    query = `SELECT * FROM custom_addresses WHERE id_custom = ${id}`;
+    connection.query(
+        query,
         (err, result) => {
-            if (!err) {
-                res.json(result);
-            }
-            else {
-                res.json(err);
-            }
+            res.json( !err ? result : err);
         }
-    )
+    );
 };
 
 clientsController.getAddress = async (req, res) => {
@@ -211,9 +192,9 @@ clientsController.addAddress = async (req, res) => {
 
     data = req.body;
 
-    query = `INSERT INTO 
-            custom_addresses (id_custom, address_1, address_2, city, province, zip)
-            VALUES (${id},'${data.address_1}','${data.address_2}','${data.city}','${data.province}','${data.zip}')`;
+    query = `INSERT INTO
+            custom_addresses (id_custom, invoice_address, address_1, address_2, city, province, zip)
+            VALUES (${id}, '${data.invoice_address}','${data.address_1}','${data.address_2}','${data.city}','${data.province}','${data.zip}')`;
     connection.query(
         query,
         (err) => {
@@ -271,7 +252,7 @@ clientsController.putAddress = async (req, res) => {
 
 clientsController.getPhones = async (req, res) => {
     id = req.params.id;
-    
+
     query = `SELECT * FROM custom_phones WHERE id_custom=${id}`;
 
     connection.query(
@@ -290,7 +271,7 @@ clientsController.addPhones = async (req, res) => {
 
     query = `INSERT INTO custom_phones (id_custom, phone_type, prefix, phone, suffix, memo)
         VALUES (${id},?,?,?,?,?);`;
-    
+
     connection.execute(
         query, [
             req.body.phone_type,
@@ -365,22 +346,21 @@ clientsController.getBankAccounts = async (req, res) => {
 clientsController.addBankAccount = async (req, res) => {
     id = req.params.idclient;
 
-    query = `INSERT INTO custom_bank_accounts (id_custom, account, address, city, province, zip)
-        VALUES (${id},?,?,?,?,?);`;
+    query = `INSERT INTO custom_bank_accounts (id_custom, bank, account, address, city, province, zip)
+        VALUES (${id},?,?,?,?,?,?);`;
 
     connection.execute(
         query, [
+            req.body.bank,
             req.body.account,
             req.body.address,
             req.body.city,
             req.body.province,
             req.body.zip
         ], (err) => {
-            if (!err) {
-                res.json(Ok);
-            } else {
-                res.json(err);
-            }
+
+            res.json( !err ? Ok : err );
+
         }
     );
 
@@ -389,22 +369,21 @@ clientsController.addBankAccount = async (req, res) => {
 clientsController.putBankAccounts = async (req, res) => {
     id = req.params.id;
 
-    query = `UPDATE custom_bank_accounts SET account = ?, address = ?, city = ?, province = ?, zip = ?
+    query = `UPDATE custom_bank_accounts SET bank = ?, account = ?, address = ?, city = ?, province = ?, zip = ?
         WHERE id = ${id}`;
 
     connection.execute(
         query, [
+            req.body.bank,
             req.body.account,
             req.body.address,
             req.body.city,
             req.body.province,
             req.body.zip
         ], (err) => {
-            if (!err) {
-                res.json(Ok);
-            } else {
-                res.json(err);
-            }
+
+            res.json( !err ? Ok : err );
+
         }
     );
 };
@@ -415,12 +394,9 @@ clientsController.deleteBankAccounts = async (req, res) => {
     connection.query(
         `DELETE FROM custom_bank_accounts WHERE id=${id}`,
         (err) => {
-            if (! err ) {
-                res.json(Ok);
-            } 
-            else {
-                res.json(err);
-            }
+
+            res.json( !err ? Ok : err );
+
         }
     )
 };
@@ -435,6 +411,82 @@ clientsController.getPhonesById = async (req, res) => {
         }
     );
 };
+
+clientsController.getEmails = async (req, res) => {
+    id = req.params.id;
+
+    query = `SELECT * FROM custom_emails WHERE id_custom=${id}`;
+
+    connection.query(
+        query, (err, result) => {
+
+          res.json( !err ? result : err);
+
+        }
+    );
+};
+
+clientsController.putEmails = async (req, res) => {
+    id = req.params.id;
+
+    query = `UPDATE custom_emails SET email = ?, verified = ?, memo = ? WHERE id = ${id}`;
+
+    connection.execute(
+        query, [
+            req.body.email,
+            req.body.verified,
+            req.body.memo
+        ], (err) => {
+
+            res.json( !err ? Ok : err );
+
+        }
+    );
+};
+
+clientsController.getEmailById = async (req, res) => {
+    id = req.params.id;
+
+    connection.query(
+        `SELECT * FROM custom_emails WHERE id=${id}`,
+        (err, result) => {
+            res.json( !err ? result[0] : err );
+        }
+    );
+};
+
+clientsController.deleteEmail = async (req, res) => {
+    id = req.params.id;
+
+    connection.query(
+        `DELETE FROM custom_emails WHERE id=${id}`,
+        (err) => {
+
+            res.json( !err ? Ok : err );
+
+        }
+    );
+};
+
+clientsController.addEmail = async (req, res) => {
+  id = req.params.id;
+
+  query = `INSERT INTO custom_emails (id_custom, email, verified) VALUES (${id},?,?);`;
+
+  connection.execute(
+    query,
+    [
+      req.body.id_custom,
+      req.body.email,
+      req.body.verified
+    ], (err) => {
+
+        res.json( !err ? Ok : err );
+
+      }
+  );
+};
+
 
 module.exports = clientsController;
 /** this ends this file

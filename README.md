@@ -6,9 +6,10 @@ mysql-microservices is a implementation of **node** for maintenance of main tabl
 
 ### custom_customers ###
 ```
-'CREATE TABLE `custom_customers` (
+CREATE TABLE `custom_customers` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `date_creation` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_modification` timestamp NOT NULL DEFAULT ''0000-00-00 00:00:00'' ON UPDATE CURRENT_TIMESTAMP,
   `first_name` varchar(100) NOT NULL,
   `last_name` varchar(100) DEFAULT NULL,
   `tax_id_number` varchar(30) DEFAULT NULL,
@@ -20,30 +21,33 @@ mysql-microservices is a implementation of **node** for maintenance of main tabl
   `image` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `tax_id_number` (`tax_id_number`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8'
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8
 ```
 ### custom_phones ###
 ```
-'CREATE TABLE `custom_phones` (
+CREATE TABLE `custom_phones` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `id_custom` mediumint(8) unsigned NOT NULL,
-  `date_creation` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `date_creation` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_modification` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `phone_type` enum(''landline'',''mobile'',''fax'',''branch'',''other'') NOT NULL,
   `prefix` char(4) DEFAULT NULL,
   `phone` varchar(30) NOT NULL,
   `suffix` varchar(45) DEFAULT NULL,
   `memo` text,
   PRIMARY KEY (`id`),
-  KEY `fk_phones_custon_id` (`id_custom`),
-  CONSTRAINT `fk_phones_custon_id` FOREIGN KEY (`id_custom`) REFERENCES `custom_customers` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8'
+  UNIQUE KEY `K_Unique` (`id_custom`,`phone`),
+  CONSTRAINT `fk_custom_phones_1` FOREIGN KEY (`id_custom`) REFERENCES `custom_customers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8
 ```
 ### custom_bank_accounts ###
 ```
-'CREATE TABLE `custom_bank_accounts` (
+CREATE TABLE `custom_bank_accounts` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `id_custom` mediumint(8) unsigned NOT NULL,
-  `date_creation` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `date_creation` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_modification` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `bank` varchar(45) NOT NULL,
   `account` varchar(100) NOT NULL,
   `address` varchar(100) DEFAULT NULL,
   `city` varchar(50) DEFAULT NULL,
@@ -51,26 +55,44 @@ mysql-microservices is a implementation of **node** for maintenance of main tabl
   `zip` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_bancks_custon_id` (`id_custom`),
-  CONSTRAINT `fk_bancks_custon_id` FOREIGN KEY (`id_custom`) REFERENCES `custom_customers` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8'
+  CONSTRAINT `fk_bancks_custon_id` FOREIGN KEY (`id_custom`) REFERENCES `custom_customers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8
 ```
 ### custom_addresses ###
 ```
-'CREATE TABLE `custom_addresses` (
+CREATE TABLE `custom_addresses` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `id_custom` mediumint(8) unsigned NOT NULL,
-  `date_creation` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `invoice_address` bit(1) NOT NULL DEFAULT b''0'',
+  `date_creation` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_modification` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `invoice_address` varchar(10) NOT NULL DEFAULT ''no'',
   `address_1` varchar(100) NOT NULL,
   `address_2` varchar(100) DEFAULT NULL,
   `city` varchar(50) NOT NULL,
   `province` varchar(50) NOT NULL,
   `zip` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_addresses_custon_id` (`id_custom`),
-  CONSTRAINT `fk_addresses_custon_id` FOREIGN KEY (`id_custom`) REFERENCES `custom_customers` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8'
+  KEY `fk_custom_addresses_1` (`id_custom`),
+  CONSTRAINT `fk_custom_addresses_1` FOREIGN KEY (`id_custom`) REFERENCES `custom_customers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8
 ```
+### custom_emails ###
+```
+CREATE TABLE `custom_emails` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `id_custom` mediumint(8) unsigned NOT NULL,
+  `date_creation` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_modification` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `email` varchar(200) NOT NULL,
+  `verified` enum(''yes'',''no'') DEFAULT ''no'',
+  `memo` mediumtext,
+  PRIMARY KEY (`id`),
+  KEY `fk_custom_emails_1` (`id_custom`),
+  CONSTRAINT `fk_custom_emails_1` FOREIGN KEY (`id_custom`) REFERENCES `custom_customers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+```
+
+
 ### products_products ###
 ```
 'CREATE TABLE `products_products` (
@@ -196,18 +218,22 @@ Lets say we need to connect by get http verb to get customs list:
 | get client all phones    | get       | http://localhost:3000/api/v1/clients/phones/id    | idclient  |
 | get banks of client      | get       | http://localhost:3000/api/v1/clients/banks/id     | idclient  |
 | get phone by id          | get       | http://localhost:3000/api/v1/clients/pones/id/id  | idphone   |
+| get clients all emails   | get       | http://localhost:3000/api/v1/clients/emails/id    | idclient  |
 | create client            | post      | http://localhost:3000/api/v1/clients/             |           |
 | create client's address  | post      | http://localhost:3000/api/v1/clients/addresses/id | idclient  |
 | create client's phone    | post      | http://localhost:3000/api/v1/clients/phones/id    | idclient  |
 | create client's bank     | post      | http://localhost:3000/api/v1/clients/banks/id     | idclient  |
+| create client's email    | post      | http://localhost:3000/api/v1/clients/emails/id    | idclient  |
 | update client            | put       | http://localhost:3000/api/v1/clients/id           | idclient  |
 | update phone             | put       | http://localhost:3000/api/v1/clients/phones/id    | idphone   |
 | update client's address  | put       | http://localhost:3000/api/v1/clients/addresses/id | idaddress |
 | update client's bank     | put       | http://localhost:3000/api/v1/clients/banks/id     | idbank    |
+| update client's email    | put       | http://localhost:3000/api/v1/clients/emails/id    | idemail   |
 | delete client            | delete    | http://localhost:3000/api/v1/clients/id           | idclient  |
 | delete client's address  | delete    | http://localhost:3000/api/v1/clients/addresses/id | idaddress |
 | delete client's phones   | delete    | http://localhost:3000/api/v1/clients/phones/id    | idphone   |
 | delete client's bank     | delete    | http://localhost:3000/api/v1/clients/banks/id     | idbank    |
+| delete client's email    | delete    | http://localhost:3000/api/v1/clients/email/id     | idbank    |
 
 As you saw in the section of tables creation, the behaviour of deletion client causes the deletion in cascade of other asociated data.
 
