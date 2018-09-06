@@ -200,6 +200,9 @@ CREATE TABLE `custom_emails` (
   CONSTRAINT `fk_suppliers_addresses_1` FOREIGN KEY (`id_supplier`) REFERENCES `suppliers_suppliers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8'
 ```
+
+
+
 ## Routes ##
 Main routes are defined in **server/index.js**, as usually we need to version APIs, in the constant **URL_version** is the url suffix.
 E.g.  ```http://localhost:3000/api/v1/```.
@@ -232,8 +235,8 @@ Lets say we need to connect by get http verb to get customs list:
 | delete client            | delete    | http://localhost:3000/api/v1/clients/id           | idclient  |
 | delete client's address  | delete    | http://localhost:3000/api/v1/clients/addresses/id | idaddress |
 | delete client's phones   | delete    | http://localhost:3000/api/v1/clients/phones/id    | idphone   |
-| delete client's bank     | delete    | http://localhost:3000/api/v1/clients/banks/id     | idbank    |
-| delete client's email    | delete    | http://localhost:3000/api/v1/clients/email/id     | idbank    |
+| delete client's bank     | delete    | http://localhost:3000/api/v1/clients/banks/id     | idemail   |
+| delete client's email    | delete    | http://localhost:3000/api/v1/clients/email/id     | idemail   |
 
 As you saw in the section of tables creation, the behaviour of deletion client causes the deletion in cascade of other asociated data.
 
