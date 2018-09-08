@@ -417,6 +417,7 @@ clientsController.getEmails = async (req, res) => {
 
     query = `SELECT * FROM custom_emails WHERE id_custom=${id}`;
 
+
     connection.query(
         query, (err, result) => {
 
@@ -426,7 +427,7 @@ clientsController.getEmails = async (req, res) => {
     );
 };
 
-clientsController.putEmails = async (req, res) => {
+clientsController.putEmail = async (req, res) => {
     id = req.params.id;
 
     query = `UPDATE custom_emails SET email = ?, verified = ?, memo = ? WHERE id = ${id}`;
@@ -469,16 +470,16 @@ clientsController.deleteEmail = async (req, res) => {
 };
 
 clientsController.addEmail = async (req, res) => {
-  id = req.params.id;
+  id = req.params.idclient;
 
-  query = `INSERT INTO custom_emails (id_custom, email, verified) VALUES (${id},?,?);`;
+  query = `INSERT INTO custom_emails (id_custom, email, verified, memo) VALUES (${id},?,?,?);`;
 
   connection.execute(
     query,
     [
-      req.body.id_custom,
       req.body.email,
-      req.body.verified
+      req.body.verified,
+      req.body.memo
     ], (err) => {
 
         res.json( !err ? Ok : err );
