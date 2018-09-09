@@ -24,7 +24,7 @@ const router = express.Router();
 const clientsController = require('../controllers/clients.controller');
 
 router.get('/', clientsController.getclients);
-router.get('pag/:limit/:offset', clientsController.getPaginatedClients);
+router.get('/pag/:limit/:offset', clientsController.getPaginatedClients);
 router.get('/:id', clientsController.getClient);
 router.get('/addresses/:idclient', clientsController.getClientAddresses);
 router.get('/address/:id', clientsController.getAddress);

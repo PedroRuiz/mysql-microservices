@@ -53,11 +53,11 @@ clientsController.getclients = (req, res) => {
 };
 
 clientsController.getPaginatedClients = (req, res) => {
-  offset = req.params.offset;
   limit = req.params.limit;
-
+  offset = req.params.offset;
+  offset--;
     connection.query(
-        `SELECT * FROM custom_customers LIMIT ${limit} ${offset}`,
+        `SELECT * FROM custom_customers LIMIT ${limit} OFFSET ${offset}`,
         (err, result, fields) => {
           return res.json ( !err ? result : err)
         }
