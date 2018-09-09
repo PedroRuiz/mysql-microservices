@@ -212,31 +212,32 @@ Lets say we need to connect by get http verb to get customs list:
 
 ### routes for clients ###
 
-| action route             | method    | url                                               |  params   |
-|:-------------------------|:----------|:--------------------------------------------------|:----------|
-| get all clients          | get       | http://localhost:3000/api/v1/clients              |           |
-| get one clients          | get       | http://localhost:3000/api/v1/clients/id           | idclient  |
-| get client all addresses | get       | http://localhost:3000/api/v1/clients/addresses/id | idclient  |
-| get address by id        | get       | http://localhost:3000/api/v1/clients/address/id   | idaddress |
-| get client all phones    | get       | http://localhost:3000/api/v1/clients/phones/id    | idclient  |
-| get banks of client      | get       | http://localhost:3000/api/v1/clients/banks/id     | idclient  |
-| get phone by id          | get       | http://localhost:3000/api/v1/clients/pones/id/id  | idphone   |
-| get clients all emails   | get       | http://localhost:3000/api/v1/clients/emails/id    | idclient  |
-| create client            | post      | http://localhost:3000/api/v1/clients/             |           |
-| create client's address  | post      | http://localhost:3000/api/v1/clients/addresses/id | idclient  |
-| create client's phone    | post      | http://localhost:3000/api/v1/clients/phones/id    | idclient  |
-| create client's bank     | post      | http://localhost:3000/api/v1/clients/banks/id     | idclient  |
-| create client's email    | post      | http://localhost:3000/api/v1/clients/emails/id    | idclient  |
-| update client            | put       | http://localhost:3000/api/v1/clients/id           | idclient  |
-| update phone             | put       | http://localhost:3000/api/v1/clients/phones/id    | idphone   |
-| update client's address  | put       | http://localhost:3000/api/v1/clients/addresses/id | idaddress |
-| update client's bank     | put       | http://localhost:3000/api/v1/clients/banks/id     | idbank    |
-| update client's email    | put       | http://localhost:3000/api/v1/clients/emails/id    | idemail   |
-| delete client            | delete    | http://localhost:3000/api/v1/clients/id           | idclient  |
-| delete client's address  | delete    | http://localhost:3000/api/v1/clients/addresses/id | idaddress |
-| delete client's phones   | delete    | http://localhost:3000/api/v1/clients/phones/id    | idphone   |
-| delete client's bank     | delete    | http://localhost:3000/api/v1/clients/banks/id     | idemail   |
-| delete client's email    | delete    | http://localhost:3000/api/v1/clients/email/id     | idemail   |
+| action route             | method    | url                                               |  params    |
+|:-------------------------|:----------|:--------------------------------------------------|:---------- |
+| get all clients          | get       | http://localhost:3000/api/v1/clients              |            |
+| get paginated clients    | get       | http://localhost:3000/api/v1/clients/pag/l/o      |limit/offset|
+| get one clients          | get       | http://localhost:3000/api/v1/clients/id           | idclient   |
+| get client all addresses | get       | http://localhost:3000/api/v1/clients/addresses/id | idclient   |
+| get address by id        | get       | http://localhost:3000/api/v1/clients/address/id   | idaddress  |
+| get client all phones    | get       | http://localhost:3000/api/v1/clients/phones/id    | idclient   |
+| get banks of client      | get       | http://localhost:3000/api/v1/clients/banks/id     | idclient   |
+| get phone by id          | get       | http://localhost:3000/api/v1/clients/pones/id/id  | idphone    |
+| get clients all emails   | get       | http://localhost:3000/api/v1/clients/emails/id    | idclient   |
+| create client            | post      | http://localhost:3000/api/v1/clients/             |            |
+| create client's address  | post      | http://localhost:3000/api/v1/clients/addresses/id | idclient   |
+| create client's phone    | post      | http://localhost:3000/api/v1/clients/phones/id    | idclient   |
+| create client's bank     | post      | http://localhost:3000/api/v1/clients/banks/id     | idclient   |
+| create client's email    | post      | http://localhost:3000/api/v1/clients/emails/id    | idclient   |
+| update client            | put       | http://localhost:3000/api/v1/clients/id           | idclient   |
+| update phone             | put       | http://localhost:3000/api/v1/clients/phones/id    | idphone    |
+| update client's address  | put       | http://localhost:3000/api/v1/clients/addresses/id | idaddress  |
+| update client's bank     | put       | http://localhost:3000/api/v1/clients/banks/id     | idbank     |
+| update client's email    | put       | http://localhost:3000/api/v1/clients/emails/id    | idemail    |
+| delete client            | delete    | http://localhost:3000/api/v1/clients/id           | idclient   |
+| delete client's address  | delete    | http://localhost:3000/api/v1/clients/addresses/id | idaddress  |
+| delete client's phones   | delete    | http://localhost:3000/api/v1/clients/phones/id    | idphone    |
+| delete client's bank     | delete    | http://localhost:3000/api/v1/clients/banks/id     | idemail    |
+| delete client's email    | delete    | http://localhost:3000/api/v1/clients/email/id     | idemail    |
 
 As you saw in the section of tables creation, the behaviour of deletion client causes the deletion in cascade of other asociated data.
 
